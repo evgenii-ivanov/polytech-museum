@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="ru.sfedu.ictis.museumapp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_exhibits"
+        android:name="ru.sfedu.ictis.museumapp.ui.gallery.GalleryFragment"
+        android:label="@string/menu_exhibits"
+        tools:layout="@layout/fragment_exhibits" />
+
+    <fragment
+        android:id="@+id/nav_qr"
+        android:name="ru.sfedu.ictis.museumapp.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_qr"
+        tools:layout="@layout/fragment_qr" />
+
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="ru.sfedu.ictis.museumapp.ui.tools.ToolsFragment"
+        android:label="@string/menu_contact"
+        tools:layout="@layout/fragment_contact" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="ru.sfedu.ictis.museumapp.ui.share.ShareFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MuseumApp</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">Политехнический музей ИТА ЮФУ</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Лента</string>
+    <string name="menu_exhibits">Экспонаты</string>
+    <string name="menu_qr">QR-Сканер</string>
+    <string name="menu_contact">Контактные данные</string>
+    <string name="menu_about">О приложении</string>
+</resources>
