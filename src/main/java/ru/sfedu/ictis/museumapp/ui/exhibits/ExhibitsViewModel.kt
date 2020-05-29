@@ -1,10 +1,10 @@
-package ru.sfedu.ictis.museumapp.ui.gallery
+package ru.sfedu.ictis.museumapp.ui.exhibits
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class ExhibitsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"

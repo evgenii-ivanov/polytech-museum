@@ -24,7 +24,7 @@ interface ExhibitService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://musem-back.herokuapp.com/")
+                .baseUrl("http://91.203.192.84/v1/")
                 .build()
             return retrofit.create(ExhibitService::class.java)
         }

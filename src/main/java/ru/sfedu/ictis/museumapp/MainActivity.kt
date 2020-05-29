@@ -1,5 +1,7 @@
 package ru.sfedu.ictis.museumapp
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +15,10 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.widget.Toast
+import com.google.zxing.integration.android.IntentIntegrator
+import ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsFragment
+import ru.sfedu.ictis.museumapp.ui.qr.QrFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,4 +60,29 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            if (result != null) {
+                if (result.contents != null) {
+                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
+                        .show()
+                    val exhibitsFragment = ExhibitsFragment()
+                    this.supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.nav_exhibits, exhibitsFragment)
+                        .addToBackStack(result.contents)
+                        .commit()
+                    return
+                } else {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+        val qrFragment = QrFragment()
+        qrFragment.initScan()
+    }
+
 }

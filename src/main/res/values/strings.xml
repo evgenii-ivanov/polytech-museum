@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MuseumApp</string>
+    <string name="app_name">Музей ИТА ЮФУ</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,4 +12,5 @@
     <string name="menu_qr">QR-Сканер</string>
     <string name="menu_contact">Контактные данные</string>
     <string name="menu_about">О приложении</string>
+    <string name="qrText">Пожалуйста, наведите камеру на QR-код</string>
 </resources>
