@@ -30,11 +30,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -60,29 +55,4 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if (result != null) {
-                if (result.contents != null) {
-                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
-                        .show()
-                    val exhibitsFragment = ExhibitsFragment()
-                    this.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.nav_exhibits, exhibitsFragment)
-                        .addToBackStack(result.contents)
-                        .commit()
-                    return
-                } else {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-        val qrFragment = QrFragment()
-        qrFragment.initScan()
-    }
-
 }

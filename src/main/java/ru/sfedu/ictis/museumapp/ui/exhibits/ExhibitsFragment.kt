@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.sfedu.ictis.museumapp.R
@@ -28,6 +30,8 @@ class ExhibitsFragment : Fragment() {
     var mPlayer: MediaPlayer? = null
     var id: Int? = 1011
     var play_button: ImageView? = null
+    var exhibitName: String = ""
+    var exhibitDescription: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,34 +41,12 @@ class ExhibitsFragment : Fragment() {
         exhibitsViewModel =
             ViewModelProviders.of(this).get(ExhibitsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_exhibits, container, false)
-        //val apiService = ExhibitService.create()
-        //val repository = ExhibitRepositoryProvider.provideExhibitRepository(apiService)
-        /*
-        if (id != null) {
-            repository.getById(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe ({
-                        result ->
-                    if (result.responseData != null) {
-                        val exhibit = result
-                        exhibitIntent.putExtra(ExhibitActivity.EXHIBIT_NAME, user.login)
-                        exhibitIntent.putExtra(ExhibitActivity.EXHIBIT_IMAGE, user.avatar_url)
-                        startActivity(exhibitIntent)
-                    }
-                    startActivity(exhibitIntent)
-                }, { error ->
-                    error.printStackTrace()
-                    startActivity(exhibitIntent)
-                })
-        }
-        */
-
         return root
     }
 
     override fun onStart() {
         initAudioPlayer()
+        initExhibitData()
         super.onStart()
     }
 
@@ -96,5 +78,35 @@ class ExhibitsFragment : Fragment() {
          */
     }
 
+    fun initExhibitData() {
+        val apiService = ExhibitService.create()
+        val repository = ExhibitRepositoryProvider.provideExhibitRepository(apiService)
+        val uid = 1011
+        repository.getById(uid)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe ({
+                    result ->
+                if (result.responseData != null) {
+                    if (result.ok) {
+                        exhibitName = result.responseData.name
+                        exhibitDescription = result.responseData.description
+                        val name_text = this.activity?.findViewById(R.id.name_text) as TextView
+                        val desc_text = this.activity?.findViewById(R.id.desc_text) as TextView
+                        name_text.setText(exhibitName)
+                        desc_text.setText(exhibitDescription)
+                        val imageView = this.activity?.findViewById(R.id.imageView) as ImageView
+                        if (result.responseData.image.isNotEmpty()) {
+                            Glide.with(this)
+                                .load("http://91.203.192.84" + result.responseData.image.first())
+                                .into(imageView)
+                        }
+                    }
+                }
+            }, { error ->
+                error.printStackTrace()
+            })
+
+    }
 
 }

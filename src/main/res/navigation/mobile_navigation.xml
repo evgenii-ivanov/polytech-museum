@@ -16,9 +16,7 @@
         android:name="ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsFragment"
         android:label="@string/menu_exhibits"
         tools:layout="@layout/fragment_exhibits">
-    <argument
-        android:name="dietId"
-        app:argType="string" />
+
     </fragment>
 
     <fragment
