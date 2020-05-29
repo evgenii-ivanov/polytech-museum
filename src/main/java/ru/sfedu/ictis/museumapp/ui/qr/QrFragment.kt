@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -59,12 +60,8 @@ public class QrFragment : Fragment() {
                 Toast.makeText(context, "Не корректный QR-код", Toast.LENGTH_SHORT)
             } else {
                 val exhibitsFragment = ExhibitsFragment()
-                if (fragmentManager == null) {
-                    return
-                }
-                fragmentManager?.beginTransaction()
-                    ?.replace(R.id.nav_qr, exhibitsFragment)
-                    ?.commit()
+                val action = QrFragmentDirections.actionNavQrToNavExhibits(result.getContents())
+                this.findNavController().navigate(action)
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

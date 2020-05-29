@@ -9,14 +9,24 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.sfedu.ictis.museumapp.R
+import ru.sfedu.ictis.museumapp.repositories.ExhibitRepository
+import ru.sfedu.ictis.museumapp.services.ExhibitService
 
 class ExhibitsFragment : Fragment() {
+
+    object ExhibitRepositoryProvider {
+        fun provideExhibitRepository(apiService: ExhibitService): ExhibitRepository {
+            return ExhibitRepository(apiService)
+        }
+    }
 
     private lateinit var exhibitsViewModel: ExhibitsViewModel
 
     var mPlayer: MediaPlayer? = null
-    var id: Int? = 0
+    var id: Int? = 1011
     var play_button: ImageView? = null
 
     override fun onCreateView(
@@ -27,6 +37,29 @@ class ExhibitsFragment : Fragment() {
         exhibitsViewModel =
             ViewModelProviders.of(this).get(ExhibitsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_exhibits, container, false)
+        //val apiService = ExhibitService.create()
+        //val repository = ExhibitRepositoryProvider.provideExhibitRepository(apiService)
+        /*
+        if (id != null) {
+            repository.getById(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe ({
+                        result ->
+                    if (result.responseData != null) {
+                        val exhibit = result
+                        exhibitIntent.putExtra(ExhibitActivity.EXHIBIT_NAME, user.login)
+                        exhibitIntent.putExtra(ExhibitActivity.EXHIBIT_IMAGE, user.avatar_url)
+                        startActivity(exhibitIntent)
+                    }
+                    startActivity(exhibitIntent)
+                }, { error ->
+                    error.printStackTrace()
+                    startActivity(exhibitIntent)
+                })
+        }
+        */
+
         return root
     }
 
