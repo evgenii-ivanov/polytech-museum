@@ -12,11 +12,23 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_exhibit_profile"
+        android:name="ru.sfedu.ictis.museumapp.ui.exhibit_profile.ExhibitProfile"
+        android:label="Экспонат"
+        tools:layout="@layout/exhibit_profile_fragment">
+        <argument
+            android:name="exhibitId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_exhibits"
         android:name="ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsFragment"
         android:label="@string/menu_exhibits"
         tools:layout="@layout/fragment_exhibits">
-
+    <argument
+        android:name="exhibitId"
+        app:argType="integer" />
     </fragment>
 
     <fragment
@@ -25,8 +37,8 @@
         android:label="@string/menu_qr"
         tools:layout="@layout/fragment_qr">
         <action
-            android:id="@+id/action_nav_qr_to_nav_exhibits"
-            app:destination="@id/nav_exhibits" />
+            android:id="@+id/action_nav_qr_to_nav_exhibit_profile"
+            app:destination="@id/nav_exhibit_profile" />
     </fragment>
 
     <fragment
