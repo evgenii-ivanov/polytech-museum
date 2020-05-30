@@ -56,11 +56,10 @@ public class QrFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
-            if (result.getContents() == null) {
+            if (result.contents == null) {
                 Toast.makeText(context, "Не корректный QR-код", Toast.LENGTH_SHORT)
             } else {
-                val exhibitsFragment = ExhibitsFragment()
-                val action = QrFragmentDirections.actionNavQrToNavExhibits(result.getContents())
+                val action = QrFragmentDirections.actionNavQrToNavExhibits(result.contents)
                 this.findNavController().navigate(action)
             }
         } else {
