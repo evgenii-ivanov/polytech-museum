@@ -18,12 +18,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
-    object ExhibitRepositoryProvider {
-        fun provideExhibitRepository(apiService: ExhibitService): ExhibitRepository {
-            return ExhibitRepository(apiService)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,20 +25,6 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val apiService = ExhibitService.create()
-        val repository = HomeFragment.ExhibitRepositoryProvider.provideExhibitRepository(apiService)
-        var text = "No text"
-        repository.getExhibits(10, 0)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe ({
-                    result ->
-                if (result.responseData.isNotEmpty()) {
-                    text = result.toString()
-                }
-            }, { error ->
-                error.printStackTrace()
-            })
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         homeViewModel.text.observe(this, Observer {

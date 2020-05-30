@@ -59,58 +59,11 @@ public class QrFragment : Fragment() {
             if (result.contents == null) {
                 Toast.makeText(context, "Не корректный QR-код", Toast.LENGTH_SHORT)
             } else {
-                val action = QrFragmentDirections.actionNavQrToNavExhibits(result.contents)
+                val action = QrFragmentDirections.actionNavQrToNavExhibitProfile(result.contents.toInt())
                 this.findNavController().navigate(action)
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-    /*
-    fun initScan() {
-        val barcodeDetector = BarcodeDetector.Builder(this.activity)
-            .setBarcodeFormats(Barcode.QR_CODE)
-            .build()
-        val qwe = this.activity?.findViewById<SurfaceView>(R.id.camerapreview)
-        val surfaceView = this.activity?.findViewById(R.id.camerapreview) as SurfaceView
-        val qrText = this.activity?.findViewById(R.id.qrText) as TextView
-        val cameraSource = CameraSource.Builder(this.activity, barcodeDetector)
-            .setRequestedPreviewSize(640, 480).build()
-        val svHolfer = surfaceView.holder
-        surfaceView.holder.addCallback(object: SurfaceHolder.Callback {
-            public override fun surfaceCreated(holder: SurfaceHolder) {
-                cameraSource.start(holder)
-            }
-
-            public override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-
-            }
-
-            public override fun surfaceDestroyed(holder: SurfaceHolder) {
-                cameraSource.stop()
-            }
-        })
-        barcodeDetector.setProcessor(object: Detector.Processor<Barcode> {
-            override fun release() {
-
-            }
-            override fun receiveDetections(detections: Detector.Detections<Barcode>?) {
-                val qrCodes = detections?.detectedItems
-                if (qrCodes?.size() != 0)
-                {
-                    textView.post(object: Runnable {
-                        override fun run() {
-                            val vibrator = context?.applicationContext?.getSystemService(Context.VIBRATOR_SERVICE)
-                            qrText.setText(qrCodes?.valueAt(0)?.displayValue)
-
-                        }
-
-                    })
-                }
-            }
-
-        })
-    }
-    */
 }

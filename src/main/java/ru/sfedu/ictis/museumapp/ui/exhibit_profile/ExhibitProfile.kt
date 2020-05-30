@@ -1,24 +1,31 @@
-package ru.sfedu.ictis.museumapp.ui.exhibits
+package ru.sfedu.ictis.museumapp.ui.exhibit_profile
 
 import android.media.MediaPlayer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+
 import ru.sfedu.ictis.museumapp.R
 import ru.sfedu.ictis.museumapp.repositories.ExhibitRepository
 import ru.sfedu.ictis.museumapp.services.ExhibitService
+import ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsFragment
+import ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsFragmentArgs
+import ru.sfedu.ictis.museumapp.ui.exhibits.ExhibitsViewModel
 
-class ExhibitsFragment : Fragment() {
+class ExhibitProfile : Fragment() {
+
+    companion object {
+        fun newInstance() = ExhibitProfile()
+    }
 
     object ExhibitRepositoryProvider {
         fun provideExhibitRepository(apiService: ExhibitService): ExhibitRepository {
@@ -34,15 +41,19 @@ class ExhibitsFragment : Fragment() {
     var exhibitName: String = ""
     var exhibitDescription: String = ""
 
+    private lateinit var viewModel: ExhibitProfileViewModel
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        exhibitsViewModel =
-            ViewModelProviders.of(this).get(ExhibitsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_exhibits, container, false)
-        return root
+        return inflater.inflate(R.layout.exhibit_profile_fragment, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(ExhibitProfileViewModel::class.java)
+        // TODO: Use the ViewModel
     }
 
     override fun onStart() {
@@ -82,7 +93,7 @@ class ExhibitsFragment : Fragment() {
 
     fun initExhibitData() {
         val apiService = ExhibitService.create()
-        val repository = ExhibitRepositoryProvider.provideExhibitRepository(apiService)
+        val repository = ExhibitsFragment.ExhibitRepositoryProvider.provideExhibitRepository(apiService)
         val id = args.exhibitId
         repository.getById(id)
             .observeOn(AndroidSchedulers.mainThread())
